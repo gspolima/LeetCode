@@ -7,33 +7,42 @@ namespace Reverse_Integer
     {
         public int Reverse(int x)
         {
-            var numberString = x.ToString();
-            var array = numberString.ToCharArray();
-            var reversed = new Stack<string>(array.Length);
-            var result = "";
-            var invert = false;
-
-            foreach (var @char in array)
+            try
             {
-                if (@char == '-')
-                {
+                var minValue = -(Math.Pow(2, 31));
+                var maxValue = Math.Pow(2, 31);
+                var invert = false;
+
+                if(x < 0)
                     invert = true;
-                    continue;
+
+                var absoluteNumber = Math.Abs(x).ToString();
+                var array = absoluteNumber.ToCharArray();
+                var reversed = new Stack<char>(array.Length);
+                var result = "";
+
+                foreach (var @char in array)
+                {
+                    reversed.Push(@char);
                 }
-                reversed.Push(@char.ToString());
-            }
 
-            foreach (var number in reversed)
+                foreach (var number in reversed)
+                {
+                    result += number;
+                }
+
+                var numericResult = int.Parse(result);
+
+                if (invert)
+                    numericResult *= -1;
+
+                return numericResult;
+            }
+            catch (OverflowException ex)
             {
-                result += number;
+                Console.WriteLine(ex.Message);
+                return 0;
             }
-            
-            var numericResult = int.Parse(result);
-
-            if (invert)
-                numericResult *= -1;
-
-            return numericResult;
         }
     }
 }
