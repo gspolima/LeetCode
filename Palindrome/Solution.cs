@@ -7,25 +7,33 @@ namespace Palindrome
     public class Solution
     {
         public bool IsPalindrome(int x) {
-            var charArray = x.ToString().ToCharArray();
-            var stack = new Stack<char>();
+            if (x < 0)
+                return false;
 
-            foreach (var number in charArray)
+            try
             {
-                stack.Push(number);
+                var charArray = x.ToString().ToCharArray();
+                var stack = new Stack<char>();
+
+                foreach (var number in charArray)
+                {
+                    stack.Push(number);
+                }
+
+                var reversedCharArray = stack.ToArray<char>();
+                var reversedString = "";
+
+                foreach (var item in reversedCharArray)
+                {
+                    reversedString += item;
+                }
+
+                return Int32.Parse(reversedString) == x ? true : false;
             }
-
-            var reversedCharArray = stack.ToArray<char>();
-            var reversedString = "";
-
-            foreach (var item in reversedCharArray)
+            catch (OverflowException)
             {
-                reversedString += item;
+                return false;
             }
-
-            var reversedX = Int32.Parse(reversedString);
-
-            return reversedX == x ? true : false;
         }
     }
 }
